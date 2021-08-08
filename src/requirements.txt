@@ -1,0 +1,6 @@
+bleach
+falcon
+gunicorn
+mariadb
+pycryptodome
+toml

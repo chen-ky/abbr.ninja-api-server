@@ -1,0 +1,25 @@
+[preference]
+# API server preference
+id_char_count = 7		# Max 12 chars
+exclude_confusing_chars = true  # 1lLIi0Oo
+maintenance_mode = false
+
+# Reserved id
+reserved_path = [
+    "index.html",
+    "css",
+    "js",
+    "static",
+    "about",
+    "why",
+    "features",
+    "t&c",
+    "privacy",
+    ]
+
+[database]
+# MariaDB configuration
+user = ""
+password = ""
+host = "::1"
+port = 3306
