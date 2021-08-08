@@ -22,7 +22,6 @@ jobs:
         python-version: 3.9
     - name: Install dependencies
       run: |
-        cd src
         python -m pip install --upgrade pip
         pip install flake8 coverage
         pip install bleach falcon gunicorn pycryptodome toml
@@ -34,6 +33,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with unittest
       run: |
+        cd src
         coverage run tests/run_tests.py
         coverage xml
     - name: Upload coverage to Codecov
