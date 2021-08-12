@@ -3,7 +3,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import datetime
-from Crypto.Hash import SHA256 
+# from Crypto.Hash import SHA256 
+from cryptography.hazmat.primitives import hashes
 import bleach
 import urllib.parse as urlparser
 
@@ -35,7 +36,10 @@ class Entry:
         self.uri = Entry.uri_to_str(parsed_uri)
         self.html_safe_uri = Entry.sanitize_uri(self.uri)
         self.encoded_uri = Entry.uri_to_str(Entry.encode_uri(parsed_uri))
-        self.sha256 = SHA256.new(self.uri.encode()).digest()
+        hash = hashes.Hash(hashes.SHA256())
+        hash.update(self.uri.encode())
+        self.sha256 = hash.finalize()
+        # SHA256.new(self.uri.encode()).digest()
         return self
 
     def set_digest(self, digest):

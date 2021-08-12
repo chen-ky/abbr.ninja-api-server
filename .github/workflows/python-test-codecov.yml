@@ -25,7 +25,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 coverage bandit
         # pip install -r src/requirements.txt
-        pip install bleach falcon gunicorn pycryptodome toml
+        pip install bleach cryptography falcon gunicorn toml
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
