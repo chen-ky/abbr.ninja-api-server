@@ -8,23 +8,17 @@ RUN apk add \
     libc-dev \
     mariadb-connector-c-dev
 
-RUN pip install \
-    bleach \
-    falcon \
-    gunicorn \
-    mariadb \
-    pycryptodome \
-    toml
-
-RUN apk del \
-    gcc \
-    libc-dev
-
 RUN adduser -H -D web
+
+RUN pip install -r src/requirements.txt
 
 COPY config.toml /etc/uri_shortener/config.toml
 COPY --chown=web:web src /srv/uri_shortener/src/.
 COPY --chown=web:web doc/build /srv/uri_shortener/doc/build/.
+
+RUN apk del \
+    gcc \
+    libc-dev
 
 RUN chmod 0550 -R /srv/uri_shortener/
 
