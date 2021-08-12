@@ -24,7 +24,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install flake8 coverage bandit
-        pip install bleach falcon gunicorn pycryptodome toml
+        pip install -r src/requirements.txt
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -34,7 +34,7 @@ jobs:
     - name: Lint with bandit
       run: |
         # Find common security issues
-        bandit -r *.py
+        bandit -r src
     - name: Test with unittest
       run: |
         cd src
