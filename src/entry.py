@@ -3,7 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import datetime
-from Crypto.Hash import SHA256 
+from cryptography.hazmat.primitives import hashes
 import bleach
 import urllib.parse as urlparser
 
@@ -35,7 +35,9 @@ class Entry:
         self.uri = Entry.uri_to_str(parsed_uri)
         self.html_safe_uri = Entry.sanitize_uri(self.uri)
         self.encoded_uri = Entry.uri_to_str(Entry.encode_uri(parsed_uri))
-        self.sha256 = SHA256.new(self.uri.encode()).digest()
+        hash = hashes.Hash(hashes.SHA256())
+        hash.update(self.uri.encode())
+        self.sha256 = hash.finalize()
         return self
 
     def set_digest(self, digest):
@@ -148,9 +150,9 @@ class Entry:
             # Safe symbols manually tested by inserting into Firefox address bar, not an ideal list
             parsed_uri = parsed_uri._replace(path=urlparser.quote(parsed_uri.path, safe="-._~:/[]@!$()*+,;%=|\\?&#"))
         if not parsed_uri.query is None:
-            parsed_uri = parsed_uri._replace(query=urlparser.quote(parsed_uri.query, safe="-._~:/?[]@!$()*+,;%=&#^|`\\\{\}"))
+            parsed_uri = parsed_uri._replace(query=urlparser.quote(parsed_uri.query, safe="-._~:/?[]@!$()*+,;%=&#^|`\\{}"))
         if not parsed_uri.fragment is None:
-            parsed_uri = parsed_uri._replace(fragment=urlparser.quote(parsed_uri.fragment, safe="-._~:/?[]@!$()*+,;%=&#^|'\\\{\}"))
+            parsed_uri = parsed_uri._replace(fragment=urlparser.quote(parsed_uri.fragment, safe="-._~:/?[]@!$()*+,;%=&#^|'\\{}"))
         return parsed_uri
 
     def __str__(self):
