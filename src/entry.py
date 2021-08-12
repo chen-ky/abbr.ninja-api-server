@@ -148,9 +148,9 @@ class Entry:
             # Safe symbols manually tested by inserting into Firefox address bar, not an ideal list
             parsed_uri = parsed_uri._replace(path=urlparser.quote(parsed_uri.path, safe="-._~:/[]@!$()*+,;%=|\\?&#"))
         if not parsed_uri.query is None:
-            parsed_uri = parsed_uri._replace(query=urlparser.quote(parsed_uri.query, safe="-._~:/?[]@!$()*+,;%=&#^|`\\\{\}"))
+            parsed_uri = parsed_uri._replace(query=urlparser.quote(parsed_uri.query, safe="-._~:/?[]@!$()*+,;%=&#^|`\\{}"))
         if not parsed_uri.fragment is None:
-            parsed_uri = parsed_uri._replace(fragment=urlparser.quote(parsed_uri.fragment, safe="-._~:/?[]@!$()*+,;%=&#^|'\\\{\}"))
+            parsed_uri = parsed_uri._replace(fragment=urlparser.quote(parsed_uri.fragment, safe="-._~:/?[]@!$()*+,;%=&#^|'\\{}"))
         return parsed_uri
 
     def __str__(self):
