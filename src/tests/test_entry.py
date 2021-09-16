@@ -187,10 +187,10 @@ class TestEntryClass(unittest.TestCase):
         args = [(
                     # No scheme
                     "//example.com/example?ex=exp&as=sf#123",                            # Input
-                    "http://example.com/example?ex=exp&as=sf#123",                       # Expected URI
-                    "http://example.com/example?ex=exp&amp;as=sf#123",                   # Expected HTML safe URI
-                    "http://example.com/example?ex=exp&as=sf#123",                       # Expected encoded URI
-                    "48df58341c953ebc25f1adbf3c5f144262c9e0d939cec4b05b5fab66fbcf0d10",  # Expected URI SHA256
+                    "https://example.com/example?ex=exp&as=sf#123",                       # Expected URI
+                    "https://example.com/example?ex=exp&amp;as=sf#123",                   # Expected HTML safe URI
+                    "https://example.com/example?ex=exp&as=sf#123",                       # Expected encoded URI
+                    "c276fd410dc58f69d79339d6203db56fd69e57ef2cb2553e2776ab56547175bc",  # Expected URI SHA256
                     (expected_time, expected_time, expected_time, expected_time)         # (init created, init access, expected created, expected access)
                 ), (
                     # Non http/https scheme
@@ -203,10 +203,10 @@ class TestEntryClass(unittest.TestCase):
                 ), (
                     # Non ascii chars in domain (netloc), path, query and fragment
                     "例子.com/例子?例子=例子#例子",
-                    "http://例子.com/例子?例子=例子#例子",
-                    "http://例子.com/例子?例子=例子#例子",
-                    "http://xn--fsqu00a.com/%E4%BE%8B%E5%AD%90?%E4%BE%8B%E5%AD%90=%E4%BE%8B%E5%AD%90#%E4%BE%8B%E5%AD%90",
-                    "499a8ef6f53a1332f331f9fb6916d8bcf6f24a86fcff6e78d9fccd50aab61b59",
+                    "https://例子.com/例子?例子=例子#例子",
+                    "https://例子.com/例子?例子=例子#例子",
+                    "https://xn--fsqu00a.com/%E4%BE%8B%E5%AD%90?%E4%BE%8B%E5%AD%90=%E4%BE%8B%E5%AD%90#%E4%BE%8B%E5%AD%90",
+                    "614d53494396d1991d106ccdd3a255dc672a843a1732c6ee5acdd62f9cb415bf",
                     (None, expected_time, None, expected_time)
                 ), (
                     # XSS 1
@@ -227,10 +227,10 @@ class TestEntryClass(unittest.TestCase):
                 ), (
                     # XSS 2
                     "<script>alert(1)</script>://<script>alert(1)</script>",
-                    "http://<script>alert(1)</script>://<script>alert(1)</script>",
-                    "http://&lt;script&gt;alert(1)&lt;/script&gt;://&lt;script&gt;alert(1)&lt;/script&gt;",
-                    "http://<script>alert(1)</script%3E://%3Cscript%3Ealert(1)%3C/script%3E",
-                    "205ab3820b7dfc1ecfb396faf2cee3483d8babd19a4a4408a0b968548b483376",
+                    "https://<script>alert(1)</script>://<script>alert(1)</script>",
+                    "https://&lt;script&gt;alert(1)&lt;/script&gt;://&lt;script&gt;alert(1)&lt;/script&gt;",
+                    "https://<script>alert(1)</script%3E://%3Cscript%3Ealert(1)%3C/script%3E",
+                    "4fec1a8e8efc07e333a1cec9c8e5364e9fc53eb659a226b18200186539374a04",
                     (None, None, None, None)
                 ), (
                     # bleach will treat "<something" as invalid tag and will remove it
@@ -242,10 +242,10 @@ class TestEntryClass(unittest.TestCase):
                     (None, None, None, None)
                 ), (
                     "example.com/?><dontremoveme=<<eot",
-                    "http://example.com/?><dontremoveme=<<eot",
-                    "http://example.com/?&gt;&lt;dontremoveme=&lt;&lt;eot",
-                    "http://example.com/?%3E%3Cdontremoveme=%3C%3Ceot",
-                    "91bee7399f85561a8cae7c76285613c32419b6a40bbd62e58e50b0345deb6862",
+                    "https://example.com/?><dontremoveme=<<eot",
+                    "https://example.com/?&gt;&lt;dontremoveme=&lt;&lt;eot",
+                    "https://example.com/?%3E%3Cdontremoveme=%3C%3Ceot",
+                    "545a13b6f6b017e0a62915f2a0458b45e711d0a9340d37b2daad2fabb19e58ea",
                     (None, None, None, None)
                 ), (
                     # mailto URI
@@ -300,10 +300,10 @@ class TestEntryClass(unittest.TestCase):
                     # No scheme
                     "//example.com/example?ex=exp&as=sf#123",                           # Original
                     "example.com/asdf",                                                 # Update to
-                    "http://example.com/asdf",                                          # Expected URI
-                    "http://example.com/asdf",                                          # Expected HTML safe URI
-                    "http://example.com/asdf",                                          # Expected encoded URI
-                    "d32088f22fb5778c6af3c6790be4ca2aa1e80ee25410a410fad475f46dc6e95e"  # Expected URI SHA256
+                    "https://example.com/asdf",                                          # Expected URI
+                    "https://example.com/asdf",                                          # Expected HTML safe URI
+                    "https://example.com/asdf",                                          # Expected encoded URI
+                    "123f83be5cb160bbddfae91c03fad508bf96a6cdd4a1cd74cc4105504bdd7120"  # Expected URI SHA256
                 ), (
                     # Non http/https scheme
                     "ethereum:0x5d67690768F0Fc4780c578393Ca567e5bCb38378",
@@ -316,10 +316,10 @@ class TestEntryClass(unittest.TestCase):
                     # Non ascii chars in domain (netloc), path, query and fragment
                     "http://example.com",
                     "例子.com/例子?例子=例子#例子",
-                    "http://例子.com/例子?例子=例子#例子",
-                    "http://例子.com/例子?例子=例子#例子",
-                    "http://xn--fsqu00a.com/%E4%BE%8B%E5%AD%90?%E4%BE%8B%E5%AD%90=%E4%BE%8B%E5%AD%90#%E4%BE%8B%E5%AD%90",
-                    "499a8ef6f53a1332f331f9fb6916d8bcf6f24a86fcff6e78d9fccd50aab61b59"
+                    "https://例子.com/例子?例子=例子#例子",
+                    "https://例子.com/例子?例子=例子#例子",
+                    "https://xn--fsqu00a.com/%E4%BE%8B%E5%AD%90?%E4%BE%8B%E5%AD%90=%E4%BE%8B%E5%AD%90#%E4%BE%8B%E5%AD%90",
+                    "614d53494396d1991d106ccdd3a255dc672a843a1732c6ee5acdd62f9cb415bf"
                 )
         ]
         for entry in args:
