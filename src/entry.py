@@ -11,7 +11,7 @@ class Entry:
     
     ID_CHAR_MAXLEN = 12
     SHA256_BYTE_LEN = 32
-    DEFAULT_SCHEME = "http"
+    DEFAULT_SCHEME = "https"
 
     def __init__(self, id, uri, created_on=None, last_accessed=None):
         Entry.is_valid_id(id)
