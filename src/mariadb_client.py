@@ -54,7 +54,6 @@ class DBClient:
             last_accessed DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\
             INDEX(sha256))"
         self.cursor.execute(cmd)
-        self.connection.commit()
     
     def create_new_entry(self, entry):
         if not isinstance(entry, Entry):
@@ -65,7 +64,6 @@ class DBClient:
             pass
         cmd = "INSERT INTO uri (id, original_uri, sha256) VALUES (?, ?, ?)"
         self.cursor.execute(cmd, (entry.id, entry.uri, entry.sha256,))
-        self.connection.commit()
 
     def update_access_date(self, id):
         Entry.is_valid_id(id)
@@ -75,7 +73,6 @@ class DBClient:
             pass
         cmd = "UPDATE uri SET last_accessed=CURRENT_TIMESTAMP WHERE id=?"
         self.cursor.execute(cmd, (id,))
-        self.connection.commit()
 
     def get_entry_from_digest(self, digest):
         digest = Entry.is_valid_digest(digest)
