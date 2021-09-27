@@ -33,14 +33,18 @@ class DBClient:
             connect_timeout=2, # TODO Throw this into config
         )
         self.connection.auto_reconnect = True # TODO Config?
-        self.cursor = self.connection.cursor()
 
+        cursor = self.get_cursor()
         # Initialise table if does not exist
-        self.cursor.execute(
+        cursor.execute(
             "SHOW TABLES WHERE Tables_in_uri_shortener=?",
             ("uri",))
-        if len(self.cursor.fetchall()) < 1:
+        if len(cursor.fetchall()) < 1:
             self.create_table()
+        cursor.close()
+
+    def get_cursor(self):
+        return self.connection.cursor()
 
     def create_table(self):
         """
@@ -53,36 +57,35 @@ class DBClient:
             created_on DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\
             last_accessed DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\
             INDEX(sha256))"
-        self.cursor.execute(cmd)
+        cursor = self.get_cursor()
+        cursor.execute(cmd)
+        self.connection.commit()
+        cursor.close()
     
     def create_new_entry(self, entry):
         if not isinstance(entry, Entry):
-            raise TypeError("Not a Entry type.")
-        try:
-            self.ping() # Hacky way to reconnect to db after idling for too long
-        except mariadb.OperationalError():
-            pass
+            raise TypeError("Not an Entry type.")
         cmd = "INSERT INTO uri (id, original_uri, sha256) VALUES (?, ?, ?)"
-        self.cursor.execute(cmd, (entry.id, entry.uri, entry.sha256,))
+        cursor = self.get_cursor()
+        cursor.execute(cmd, (entry.id, entry.uri, entry.sha256,))
+        self.connection.commit()
+        cursor.close()
 
     def update_access_date(self, id):
         Entry.is_valid_id(id)
-        try:
-            self.ping() # Hacky way to reconnect to db after idling for too long
-        except mariadb.OperationalError():
-            pass
         cmd = "UPDATE uri SET last_accessed=CURRENT_TIMESTAMP WHERE id=?"
-        self.cursor.execute(cmd, (id,))
+        cursor = self.get_cursor()
+        cursor.execute(cmd, (id,))
+        self.connection.commit()
+        cursor.close()
 
     def get_entry_from_digest(self, digest):
         digest = Entry.is_valid_digest(digest)
-        try:
-            self.ping() # Hacky way to reconnect to db after idling for too long
-        except mariadb.OperationalError():
-            pass
         cmd = "SELECT * FROM uri WHERE sha256=?"
-        self.cursor.execute(cmd, (digest,))
-        query = self.cursor.fetchall()
+        cursor = self.get_cursor()
+        cursor.execute(cmd, (digest,))
+        query = cursor.fetchall()
+        cursor.close()
         result = []
         for id, uri, digest, created_time, last_accessed_time in query:
             entry = Entry(id, uri, created_time, last_accessed_time)
@@ -93,13 +96,11 @@ class DBClient:
 
     def get_entry_from_id(self, id):
         Entry.is_valid_id(id)
-        try:
-            self.ping() # Hacky way to reconnect to db after idling for too long
-        except mariadb.OperationalError():
-            pass
         cmd = "SELECT * FROM uri WHERE id=?"
-        self.cursor.execute(cmd, (id,))
-        query = self.cursor.fetchall()
+        cursor = self.get_cursor()
+        cursor.execute(cmd, (id,))
+        query = cursor.fetchall()
+        cursor.close()
         result = []
         for id, uri, digest, created_time, last_accessed_time in query:
             entry = Entry(id, uri, created_time, last_accessed_time)
@@ -113,7 +114,6 @@ class DBClient:
 
     def close_connection(self):
         self.connection.close()
-        self.cursor = None
         self.connection = None
     
 if "__main__" == __name__:
