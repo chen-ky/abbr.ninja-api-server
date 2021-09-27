@@ -30,7 +30,7 @@ class DBClient:
             host=host,
             port=port,
             database=DATABASE_NAME,
-            connect_timeout=2, # TODO Throw this into config
+            connect_timeout=5, # TODO Throw this into config
         )
         self.connection.auto_reconnect = True # TODO Config?
 
