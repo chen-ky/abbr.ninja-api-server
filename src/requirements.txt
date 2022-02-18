@@ -2,7 +2,7 @@ bleach==4.1.0
 cryptography==36.0.1
 falcon==3.0.1
 gunicorn==20.1.0
-mariadb==1.0.9
+mariadb==1.0.10
 packaging==21.3
 pyparsing==3.0.7
 six==1.16.0
