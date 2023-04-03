@@ -1,11 +1,26 @@
-FROM docker.io/slatedocs/slate:latest AS docs
+FROM ruby:2.6-slim as docs
 
-RUN apt-get update && apt-get install -y git
-RUN gem update --system && bundle install
+WORKDIR /srv
 
-RUN git clone https://github.com/chen-ky/abbr.ninja-api-doc.git && ln -s 'abbr.ninja-api-doc/source' ./source
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        build-essential \
+        git \
+        nodejs
 
-RUN bundle exec middleman build
+RUN git clone https://github.com/chen-ky/abbr.ninja-api-doc.git slate
+
+WORKDIR /srv/slate
+
+RUN gem install bundler \
+    && bundle install
+
+RUN apt-get remove -y build-essential git \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN chmod +x /srv/slate/slate.sh
+RUN /srv/slate/slate.sh build
 
 
 FROM docker.io/library/python:alpine AS production
