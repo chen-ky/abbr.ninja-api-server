@@ -1,4 +1,4 @@
-bleach==6.0.0
+bleach==6.1.0
 cryptography==41.0.4
 falcon==3.1.1
 gunicorn==21.2.0
