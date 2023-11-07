@@ -25,10 +25,10 @@ RUN /srv/slate/slate.sh build
 
 FROM docker.io/library/python:alpine AS production
 
-RUN apk update \
-    && apk upgrade
+RUN apk update --no-cache \
+    && apk upgrade --no-cache
 
-RUN apk add \
+RUN apk add --no-cache \
     cargo \
     gcc \
     libc-dev \
