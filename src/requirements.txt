@@ -5,6 +5,6 @@ gunicorn==23.0.0
 mariadb==1.1.11
 packaging==24.2
 pyparsing==3.2.0
-six==1.16.0
+six==1.17.0
 toml==0.10.2
 webencodings==0.5.1
