@@ -3,7 +3,7 @@ cryptography==44.0.2
 falcon==4.0.2
 gunicorn==23.0.0
 mariadb==1.1.12
-packaging==24.2
+packaging==25.0
 pyparsing==3.2.1
 six==1.17.0
 toml==0.10.2
