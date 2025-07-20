@@ -1,10 +1,15 @@
 bleach==6.2.0
+certifi==2025.7.14
+cffi==1.17.1
 cryptography==44.0.2
 falcon==4.0.2
 gunicorn==23.0.0
 mariadb==1.1.12
 packaging==24.2
+pycparser==2.22
 pyparsing==3.2.1
+sentry-sdk==2.33.0
 six==1.17.0
 toml==0.10.2
+urllib3==2.5.0
 webencodings==0.5.1

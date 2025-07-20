@@ -6,6 +6,8 @@
 
 import app_info
 import api_server
+import os
+import sentry_sdk
 
 import sys
 
@@ -21,11 +23,23 @@ import sys
 #     # print(args)
 #     return main()
 
+
 def main():
+    if "SENTRY_DSN" in os.environ:
+        sentry_sdk.init(
+            dsn=os.getenv("SENTRY_DSN").strip(),
+            send_default_pii=False,
+            traces_sample_rate=1.0,
+            profile_session_sample_rate=1.0,
+            profile_lifecycle="trace",
+        )
+        print("Sentry SDK initialised")
+
     print(f"Starting API server v{app_info.VERSION}...")
 
     application = api_server.app
     return application
+
 
 if "__main__" == __name__:
     from cheroot.wsgi import Server as CherryPyServer

@@ -1,7 +1,7 @@
 [preference]
 # API server preference
-id_char_count = 7		# Max 12 chars
-exclude_confusing_chars = true  # 1lLIi0Oo
+id_char_count = 7              # Max 12 chars
+exclude_confusing_chars = true # 1lLIi0Oo
 maintenance_mode = false
 
 # Reserved id
@@ -15,7 +15,7 @@ reserved_path = [
     "features",
     "t&c",
     "privacy",
-    ]
+]
 
 [database]
 # MariaDB configuration
