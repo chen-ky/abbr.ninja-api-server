@@ -8,7 +8,7 @@ mariadb==1.1.12
 packaging==24.2
 pycparser==2.22
 pyparsing==3.2.1
-sentry-sdk==2.33.0
+sentry-sdk==2.33.2
 six==1.17.0
 toml==0.10.2
 urllib3==2.5.0
