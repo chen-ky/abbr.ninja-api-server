@@ -5,7 +5,7 @@ cryptography==46.0.5
 falcon==4.0.2
 gunicorn==23.0.0
 mariadb==1.1.14
-packaging==25.0
+packaging==26.0
 pycparser==2.23
 pyparsing==3.2.5
 sentry-sdk==2.54.0
