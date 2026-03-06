@@ -2,7 +2,7 @@ bleach==6.2.0
 certifi==2026.2.25
 cffi==2.0.0
 cryptography==46.0.5
-falcon==4.0.2
+falcon==4.2.0
 gunicorn==23.0.0
 mariadb==1.1.14
 packaging==25.0
