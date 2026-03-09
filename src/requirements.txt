@@ -7,7 +7,7 @@ gunicorn==23.0.0
 mariadb==1.1.14
 packaging==25.0
 pycparser==2.23
-pyparsing==3.2.5
+pyparsing==3.3.2
 sentry-sdk==2.54.0
 six==1.17.0
 toml==0.10.2
