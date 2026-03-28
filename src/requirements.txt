@@ -6,7 +6,7 @@ falcon==4.2.0
 gunicorn==23.0.0
 mariadb==1.1.14
 packaging==26.0
-pycparser==2.23
+pycparser==3.0
 pyparsing==3.3.2
 sentry-sdk==2.54.0
 six==1.17.0
